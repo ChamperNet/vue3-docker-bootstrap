@@ -1,4 +1,11 @@
 <template>
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 border-bottom">
+    <div class="btn-toolbar mb-2 mb-md-2">
+      <router-link to="/users/create" class="btn btn-sm btn-outline-secondary">Add</router-link>
+    </div>
+  </div>
+
   <div class="table-responsive">
     <table class="table table-striped table-sm">
       <thead>
@@ -43,11 +50,12 @@
 <script lang="ts">
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { Entity } from '@/interfaces/entity'
 
 export default {
   name: 'Users',
   setup () {
-    const users = ref('')
+    const users = ref([])
     const page = ref(1)
     const lastPage = ref(0)
 
@@ -73,7 +81,7 @@ export default {
       if (confirm('Are you sure you want to delete this record?')) {
         await axios.delete(`users/${id}`)
 
-        users.value = users.value.filter((u: { id: number }) => u.id !== id)
+        users.value = users.value.filter((e: Entity) => e.id !== id)
       }
     }
 
